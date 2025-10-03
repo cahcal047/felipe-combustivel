@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Relatórios de Equipamentos</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="app-header">
+		<h1>Relatórios de Equipamentos</h1>
+		<nav class="tabs">
+			<button class="tab-button active" data-tab="base">Base</button>
+			<button class="tab-button" data-tab="relatorios">Relatórios</button>
+			<button class="tab-button" data-tab="graficos">Gráficos</button>
+		</nav>
+	</header>
+
+	<main>
+		<section id="tab-base" class="tab-content active">
+			<h2>Base de Dados</h2>
+			<form id="entry-form" class="entry-form">
+				<input type="hidden" id="row-id">
+				<label>
+					<span>Equipamento</span>
+					<input type="text" id="equipamento" required>
+				</label>
+				<label>
+					<span>Modelo</span>
+					<input type="text" id="modelo" required>
+				</label>
+				<label>
+					<span>Unidade</span>
+					<input type="text" id="unidade" required>
+				</label>
+				<label>
+					<span>KM/h</span>
+					<input type="number" step="0.01" id="kmh" required>
+				</label>
+				<label>
+					<span>Combustivel Consumido</span>
+					<input type="number" step="0.01" id="combustivel" required>
+				</label>
+				<label>
+					<span>Km/l / L/h</span>
+					<input type="number" step="0.01" id="eficiencia">
+				</label>
+				<label>
+					<span>Data (opcional)</span>
+					<input type="date" id="data-registro">
+				</label>
+				<div class="form-actions">
+					<button type="submit">Salvar</button>
+					<button type="reset" id="reset-form" class="secondary">Limpar</button>
+				</div>
+			</form>
+
+			<div class="table-actions">
+				<button id="add-new">Novo</button>
+				<button id="export-csv" class="secondary">Exportar CSV</button>
+				<label class="import-csv">
+					<input type="file" id="import-csv" accept=".csv">
+					<span>Importar CSV</span>
+				</label>
+			</div>
+
+			<div class="table-wrapper">
+				<table id="base-table">
+					<thead>
+						<tr>
+							<th>Equipamento</th>
+							<th>Modelo</th>
+							<th>Unidade</th>
+							<th>KM/h Trabalhadas</th>
+							<th>Combustivel Consumido</th>
+							<th>Km/l / L/h</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- Linhas inseridas dinamicamente -->
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section id="tab-relatorios" class="tab-content">
+			<h2>Relatórios</h2>
+			<div class="card" style="margin-bottom:12px">
+				<div style="display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:8px;margin-bottom:8px">
+					<label style="display:flex;flex-direction:column;gap:6px"><span style="color:#9ca3af">De</span><input type="date" id="filtro-de"></label>
+					<label style="display:flex;flex-direction:column;gap:6px"><span style="color:#9ca3af">Até</span><input type="date" id="filtro-ate"></label>
+					<label style="display:flex;flex-direction:column;gap:6px"><span style="color:#9ca3af">Modelo</span><input type="text" id="filtro-modelo" placeholder="ex.: Ch570"></label>
+					<label style="display:flex;flex-direction:column;gap:6px"><span style="color:#9ca3af">Equipamento</span><input type="text" id="filtro-equip" placeholder="ex.: 104119"></label>
+					<button id="aplicar-filtros" class="secondary">Aplicar filtros</button>
+					<button id="limpar-filtros" class="secondary">Limpar</button>
+				</div>
+				<label style="display:flex;align-items:center;gap:8px">
+					<span style="color:#9ca3af">Preço do combustível (R$ / L)</span>
+					<input type="number" step="0.01" id="preco-comb" style="max-width:160px">
+					<button id="aplicar-preco" class="secondary">Aplicar</button>
+				</label>
+			</div>
+			<div id="reports-container" class="cards"></div>
+			<div id="reports-extra" class="cards" style="margin-top:12px"></div>
+		</section>
+
+		<section id="tab-graficos" class="tab-content">
+			<h2>Gráficos</h2>
+			<canvas id="chart-eficiencia" height="120"></canvas>
+			<canvas id="chart-combustivel" height="120"></canvas>
+		</section>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
